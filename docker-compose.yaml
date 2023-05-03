@@ -1,0 +1,18 @@
+version: '3'
+
+services:
+  postgresdb:
+    image: postgres:14
+    ports:
+      - 5432:5432
+    environment:
+      POSTGRES_PASSWORD: "password"
+    volumes:
+      - dbdata:/var/lib/postgres/data
+  dbtclient:
+    build: dbt
+    tty: true
+    depends_on:
+      - postgresdb
+volumes:
+  dbdata:
