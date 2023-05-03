@@ -53,8 +53,8 @@ ENV LANG=C.UTF-8
 # Update python
 RUN python -m pip install --upgrade pip setuptools wheel --no-cache-dir
 
-# Set docker basics
-WORKDIR /usr/app/dbt/
+# Set docker basics /root/.dbtに置くことを求められるため。
+WORKDIR /root/
 VOLUME /usr/app
 #ENTRYPOINT ["dbt"]
 
@@ -90,6 +90,5 @@ RUN python -m pip install --no-cache-dir "git+https://github.com/dbt-labs/${dbt_
 #FROM base as dbt-snowflake
 #RUN python -m pip install --no-cache-dir "git+https://github.com/dbt-labs/${dbt_snowflake_ref}#egg=dbt-snowflake"
 
-RUN mkdir -p /usr/app/.dbt
-ADD profiles.yml /usr/app/.dbt/profiles.yml 
-
+#RUN mkdir -p /usr/app/.dbt
+ADD profiles.yml /root/.dbt/profiles.yml 

@@ -11,7 +11,12 @@ services:
       - dbdata:/var/lib/postgres/data
   dbtclient:
     build: dbt
-    tty: true
+    command: "dbt run"
+    volumes:
+      - type: bind
+        source: "./orange"
+        target: "/usr/app/orange"
+    working_dir: "/usr/app/orange"
     depends_on:
       - postgresdb
 volumes:
