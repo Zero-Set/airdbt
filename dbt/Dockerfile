@@ -56,7 +56,9 @@ RUN python -m pip install --upgrade pip setuptools wheel --no-cache-dir
 # Set docker basics /root/.dbtに置くことを求められるため。
 WORKDIR /root/
 VOLUME /usr/app
-#ENTRYPOINT ["dbt"]
+
+# https://qiita.com/ieiringoo/items/04f73e5557b534dc694d
+ENTRYPOINT ["echo dbt"]
 
 ##
 # dbt-core
