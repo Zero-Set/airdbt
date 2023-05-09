@@ -13,11 +13,7 @@ docker composeでairflowを立てたところで、
 - クラウドサービスと連携する
 - airflowのコンテナに無理やり実装を同居させる（今回のケースであればairflowとdbtを1つのコンテナで共存
 
-不具合が起きそうなところ
-docker composeのデフォルトネットワークのIPアドレスを直接dbt_profile.yamlにセットしている。
-（そのため、いけてない。これやるくらいならoperatorを使って各クラウドサービスに繋いだほうが良い）
-
-ということでdbtOperator出ないかな。。。（いや、作れやという話だがもう作られてるか？）
+とすると分離する必要性ってないが、依存関係が悩みの種になる。
 
 docker desktopではなくlimaを使っている関係上
 /var/run/docker.sockのマウントを使っていない。
