@@ -273,14 +273,6 @@ services:
       - bash
       - -c
       - airflow
-  docker-socket-proxy:
-    image: tecnativa/docker-socket-proxy:0.1.1
-    environment:
-      CONTAINERS: 1
-      IMAGES: 1
-      AUTH: 1
-      POST: 1
-    privileged: true
   # You can enable flower by adding "--profile flower" option e.g. docker-compose --profile flower up
   # or by explicitly targeted on the command line e.g. docker-compose up flower.
   # See: https://docs.docker.com/compose/profiles/
@@ -302,5 +294,26 @@ services:
   #     <<: *airflow-common-depends-on
   #     airflow-init:
   #       condition: service_completed_successfully
+  
+  # dbtの更新対象
+  postgres_dbt:
+    image: postgres:13
+    ports:
+      - 5432:5432
+    environment:
+      POSTGRES_PASSWORD: "password"
+      TZ: "Asia/Tokyo"
+    volumes:
+      - dbt-volume:/var/lib/postgres/data
+  dbtclient:
+    build: dbt
+    image: mydbt
+    command: "/bin/bash"
+    stdin_open: true
+    tty: true
+
+    depends_on:
+      - postgres_dbt
 volumes:
   postgres-db-volume:
+  dbt-volume:

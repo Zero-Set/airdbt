@@ -58,7 +58,7 @@ WORKDIR /root/
 VOLUME /usr/app
 
 # https://qiita.com/ieiringoo/items/04f73e5557b534dc694d
-ENTRYPOINT ["echo dbt"]
+ENTRYPOINT []
 
 ##
 # dbt-core
@@ -92,5 +92,10 @@ RUN python -m pip install --no-cache-dir "git+https://github.com/dbt-labs/${dbt_
 #FROM base as dbt-snowflake
 #RUN python -m pip install --no-cache-dir "git+https://github.com/dbt-labs/${dbt_snowflake_ref}#egg=dbt-snowflake"
 
-#RUN mkdir -p /usr/app/.dbt
-ADD profiles.yml /root/.dbt/profiles.yml 
+# 一時的な場所にprofiles.ymlを格納しておく。
+RUN mkdir -p /tmp/dbt
+ADD profiles.yml /tmp/dbt/profiles.yml 
+
+# dbt taskをおそらく作成するたびに作らないと。。。(うまい方法ないものか)
+COPY orange /usr/app/orange
+WORKDIR /usr/app/orange
